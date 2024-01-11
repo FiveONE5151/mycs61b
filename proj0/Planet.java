@@ -41,8 +41,8 @@ public class Planet {
     public Planet(Planet body) {
         xxPos = body.xxPos;
         yyPos = body.yyPos;
-        xxVel = body.yyPos;
-        yyVel = body.yyPos;
+        xxVel = body.xxVel;
+        yyVel = body.yyVel;
         mass = body.mass;
         imgFileName = body.imgFileName;
     }
