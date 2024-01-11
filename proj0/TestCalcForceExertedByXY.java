@@ -1,34 +1,35 @@
 import java.math.*;
 
 /**
- *  Tests calcForceExertedByXY
+ * Tests calcForceExertedByXY
  */
 public class TestCalcForceExertedByXY {
 
     /**
-     *  Tests calcForceExertedByXY.
+     * Tests calcForceExertedByXY.
      */
     public static void main(String[] args) {
         checkCalcForceExertedByXY();
     }
 
-
-    /** Checks whether two doubles are approximately equal. 
-     *  @param  expected    Expected double
-     *  @param  actual      Double received
-     *  @param  eps         Tolerance for the double comparison.
+    /**
+     * Checks whether two doubles are approximately equal.
+     * 
+     * @param expected Expected double
+     * @param actual   Double received
+     * @param eps      Tolerance for the double comparison.
      */
     private static boolean approxEqual(double actual, double expected, double eps) {
         return Math.abs(expected - actual) <= eps * Math.max(expected, actual);
     }
 
     /**
-     *  Checks whether or not two Doubles are equal and prints the result.
+     * Checks whether or not two Doubles are equal and prints the result.
      *
-     *  @param  expected    Expected double
-     *  @param  actual      Double received
-     *  @param  label       Label for the 'test' case
-     *  @param  eps         Tolerance for the double comparison.
+     * @param expected Expected double
+     * @param actual   Double received
+     * @param label    Label for the 'test' case
+     * @param eps      Tolerance for the double comparison.
      */
     private static void checkEquals(double actual, double expected, String label, double eps) {
         if (approxEqual(actual, expected, eps)) {
@@ -42,7 +43,7 @@ public class TestCalcForceExertedByXY {
     }
 
     /**
-     *  Checks the Planet class to make sure calcForceExertedByXY works.
+     * Checks the Planet class to make sure calcForceExertedByXY works.
      */
     private static void checkCalcForceExertedByXY() {
         System.out.println("Checking calcForceExertedByX and calcForceExertedByY...");

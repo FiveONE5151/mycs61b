@@ -1,23 +1,23 @@
 
 /**
- *  Tests calcDistance
+ * Tests calcDistance
  */
 public class TestCalcDistance {
 
     /**
-     *  Tests calcDistance.
+     * Tests calcDistance.
      */
     public static void main(String[] args) {
         checkCalcDistance();
     }
 
     /**
-     *  Checks whether or not two Doubles are equal and prints the result.
+     * Checks whether or not two Doubles are equal and prints the result.
      *
-     *  @param  expected    Expected double
-     *  @param  actual      Double received
-     *  @param  label       Label for the 'test' case
-     *  @param  eps         Tolerance for the double comparison.
+     * @param expected Expected double
+     * @param actual   Double received
+     * @param label    Label for the 'test' case
+     * @param eps      Tolerance for the double comparison.
      */
     private static void checkEquals(double actual, double expected, String label, double eps) {
         if (Math.abs(expected - actual) <= eps * Math.max(expected, actual)) {
@@ -28,7 +28,7 @@ public class TestCalcDistance {
     }
 
     /**
-     *  Checks the Planet class to make sure calcDistance works.
+     * Checks the Planet class to make sure calcDistance works.
      */
     private static void checkCalcDistance() {
         System.out.println("Checking calcDistance...");
