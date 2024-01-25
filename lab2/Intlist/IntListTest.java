@@ -26,7 +26,6 @@ public class IntListTest {
         IntList.dSquareList(L);
         assertEquals(IntList.of(1, 4, 9), L);
     }
-
     /**
      * Do not use the new keyword in your tests. You can create
      * lists using the handy IntList.of method.
@@ -64,6 +63,11 @@ public class IntListTest {
         IntList exp = IntList.of(1, 2, 3, 4, 5, 6);
         assertEquals(exp, IntList.catenate(A, B));
         assertEquals(IntList.of(1, 2, 3), A);
+        IntList C = null;
+        assertEquals(A, IntList.catenate(C, A));
+        assertEquals(null, C);
+        assertEquals(B,IntList.catenate(B,C));
+        assertEquals(B,IntList.of(4,5,6));
+        assertEquals(null,IntList.catenate(null,null));
     }
-
 }
