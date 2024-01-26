@@ -72,4 +72,13 @@ public class IntListTest {
         assertEquals(B,IntList.of(4,5,6));
         assertEquals(null,IntList.catenate(null,null));
     }
+
+    @Test
+    public void testToString(){
+        IntList A = IntList.of(1,2,3,4,5,6);
+        System.out.println(A.toString());
+        IntList cycle = new IntList(10,null);
+        cycle.rest = new IntList(20,cycle);
+        System.out.println(cycle.toString());
+    }
 }

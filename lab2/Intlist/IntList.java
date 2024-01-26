@@ -81,7 +81,7 @@ public class IntList {
         //TODO:  fill in method
         if (A == null)
             return B;
-        if(B==null)
+        if (B == null)
             return A;
         IntList ptr = A;
         while (ptr.rest != null)
