@@ -54,20 +54,41 @@ public class LinkedListDeque<ListItem> {
         size = 0;
     }
 
+    public LinkedListDeque(ListItem... items) {
+        sentinel = new Node(null);
+        //even if there is only a single sentinel node, you should make it circular!
+        //especially important for making your code cleaner
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
+        size = 0;
+        for (ListItem item : items) {
+            addLast(item);
+        }
+    }
+
     public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new Node(null);
+        //even if there is only a single sentinel node, you should make it circular!
+        //especially important for making your code cleaner
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
+        size = 0;
         if (other == null || other.size() == 0)
             return;
-        Node current = this.sentinel.next;
-        Node ptr = other.sentinel.next;
-        Node prev = this.sentinel;
-        while (ptr != other.sentinel) {
-            current.item = ptr.item;
-            current.prev = prev;
-            current = current.next;
-            prev = prev.next;
-            ptr = ptr.next;
+        for (int i = 0; i < other.size(); i++) {
+            this.addLast((ListItem)other.get(i));
         }
-
+        /*Node current = this.sentinel;
+        Node ptr = other.sentinel.next;
+        while (ptr != other.sentinel) {
+            current.next = new Node(ptr.item);
+            current.next.prev = current;
+            current = current.next;
+            ptr = ptr.next;
+            ++size;
+        }
+        current.next = this.sentinel;
+        this.sentinel.prev = current;*/
     }
 
     public void addFirst(ListItem item) {

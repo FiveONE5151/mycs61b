@@ -1,3 +1,7 @@
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
 /** Performs some basic linked list tests. */
 public class LinkedListDequeTest {
 
@@ -77,6 +81,60 @@ public class LinkedListDequeTest {
         passed = checkEmpty(true, lld1.isEmpty()) && passed;
 
         printTestStatus(passed);
+    }
+
+    @Test
+    public void testGet() {
+        LinkedListDeque<String> lld = new LinkedListDeque<>();
+        lld.addLast("Front");
+        assertFalse(lld.isEmpty());
+        assertEquals("Front", lld.get(0));
+        assertNull(lld.get(19));
+        lld.removeLast();
+        assertNull(lld.get(0));
+        lld.addLast("Front");
+        lld.addLast("Middle");
+        lld.addLast("End");
+        assertEquals("Front", lld.get(0));
+        assertEquals("Middle", lld.get(1));
+        assertEquals("End", lld.get(2));
+        assertNull(lld.get(3));
+        lld.printDeque();
+    }
+
+    @Test
+    public void testGetRecursion() {
+        LinkedListDeque<String> lld = new LinkedListDeque<>();
+        lld.addLast("Front");
+        assertFalse(lld.isEmpty());
+        assertEquals("Front", lld.getRecursion(0));
+        assertNull(lld.getRecursion(19));
+        lld.removeLast();
+        assertNull(lld.getRecursion(0));
+        lld.addLast("Front");
+        lld.addLast("Middle");
+        lld.addLast("End");
+        assertEquals("Front", lld.getRecursion(0));
+        assertEquals("Middle", lld.getRecursion(1));
+        assertEquals("End", lld.getRecursion(2));
+        assertNull(lld.getRecursion(3));
+        lld.printDeque();
+    }
+
+    @Test
+    public void testDeepCopy() {
+        LinkedListDeque<String> lld = new LinkedListDeque<>("Front", "Middle", "End");
+        assertEquals("Front", lld.getRecursion(0));
+        assertEquals("Middle", lld.getRecursion(1));
+        assertEquals("End", lld.getRecursion(2));
+        LinkedListDeque<String> lld2 = new LinkedListDeque<>(lld);
+        assertEquals("Front", lld2.getRecursion(0));
+        assertEquals("Middle", lld2.getRecursion(1));
+        assertEquals("End", lld2.getRecursion(2));
+        lld2.printDeque();
+        lld2 = null;
+        LinkedListDeque<String> lld3 = new LinkedListDeque<>(lld2);
+        assertEquals(0, lld3.size());
     }
 
     public static void main(String[] args) {
