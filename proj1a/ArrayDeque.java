@@ -1,10 +1,10 @@
 /**
  * Circular array deque
  *
- * @param <ListItem>
+ * @param <T>
  */
-public class ArrayDeque<ListItem> {
-    private ListItem[] array;
+public class ArrayDeque<T> {
+    private T[] array;
     private int size;
     private int length = 8;
     private final double limit = 0.25;
@@ -17,13 +17,13 @@ public class ArrayDeque<ListItem> {
     private int end = 0;
 
     public ArrayDeque() {
-        array = (ListItem[])new Object[length];
+        array = (T[])new Object[length];
     }
 
     public ArrayDeque(int size) {
         this.size = size;
         length = size * RESIZE_FACTOR;
-        array = (ListItem[])new Object[length];
+        array = (T[])new Object[length];
     }
 
     public ArrayDeque(ArrayDeque other) {
@@ -32,19 +32,19 @@ public class ArrayDeque<ListItem> {
 
     private void resize() {
         if (((double)(size - 1) / length) < limit) {
-            ListItem[] newArray = (ListItem[])new Object[length / RESIZE_FACTOR];
-            arrayCopy((ListItem[])newArray);
+            T[] newArray = (T[])new Object[length / RESIZE_FACTOR];
+            arrayCopy((T[])newArray);
             length /= RESIZE_FACTOR;
             array = newArray;
         } else if (size + 1 >= length) {
-            ListItem[] newArray = (ListItem[])new Object[(size + 1) * RESIZE_FACTOR];
-            arrayCopy((ListItem[])newArray);
+            T[] newArray = (T[])new Object[(size + 1) * RESIZE_FACTOR];
+            arrayCopy((T[])newArray);
             length = (size + 1) * RESIZE_FACTOR;
             array = newArray;
         }
     }
 
-    private void arrayCopy(ListItem[] newArray) {
+    private void arrayCopy(T[] newArray) {
         if (front < end) {
             for (int i = front + 1, j = 1; i <= end; ++i, ++j) {
                 newArray[j] = array[i];
@@ -62,7 +62,7 @@ public class ArrayDeque<ListItem> {
         end = size;
     }
 
-    public void addFirst(ListItem item) {
+    public void addFirst(T item) {
         if (item == null)
             return;
         if (size + 1 >= length)
@@ -76,7 +76,7 @@ public class ArrayDeque<ListItem> {
         --front;
     }
 
-    public void addLast(ListItem item) {
+    public void addLast(T item) {
         if (item == null)
             return;
         if (size + 1 >= length)
@@ -118,20 +118,20 @@ public class ArrayDeque<ListItem> {
 
     }
 
-    public ListItem removeFirst() {
+    public T removeFirst() {
         if (isEmpty())
             return null;
-        if ((double)(size - 1) / length < limit)
+        if ((double)(size - 1) / length < limit && length > 8)// length>8 can avoid the arrayCopy bound issue
             resize();
         front = (front + 1) % length;
         --size;
         return array[front];
     }
 
-    public ListItem removeLast() {
+    public T removeLast() {
         if (isEmpty())
             return null;
-        if ((double)(size - 1) / length < limit)
+        if ((double)(size - 1) / length < limit && length > 8)// length>8 can avoid the arrayCopy bound issue
             resize();
         int temp = end;
         --size;
@@ -143,7 +143,7 @@ public class ArrayDeque<ListItem> {
         return array[temp];
     }
 
-    public ListItem get(int index) {
+    public T get(int index) {
         if (index < 0 || index >= size) {
             String message = String.format("Index %d out of length %d", index, size);
             throw new IndexOutOfBoundsException(message);

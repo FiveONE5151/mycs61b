@@ -3,12 +3,12 @@
  * the list is 1, remove last requires both sentF and sentB to move to the previous node, which is the sentinel node but
  * in normal cases, it only requires the sentB to move to the previous node. it can also avoid the size==0 case
  *
- * @param <ListItem>
+ * @param <T>
  */
-public class LinkedListDeque<ListItem> {
+public class LinkedListDeque<T> {
     private class Node {
         private Node prev;
-        private ListItem item;
+        private T item;
         private Node next;
 
         Node() {
@@ -17,7 +17,7 @@ public class LinkedListDeque<ListItem> {
             next = null;
         }
 
-        Node(ListItem item) {
+        Node(T item) {
             prev = null;
             this.item = item;
             next = null;
@@ -39,11 +39,11 @@ public class LinkedListDeque<ListItem> {
             this.next = next;
         }
 
-        ListItem getItem() {
+        T getItem() {
             return item;
         }
 
-        public void setItem(ListItem item) {
+        public void setItem(T item) {
             this.item = item;
         }
 
@@ -61,14 +61,14 @@ public class LinkedListDeque<ListItem> {
         size = 0;
     }
 
-    public LinkedListDeque(ListItem... items) {
+    public LinkedListDeque(T... items) {
         sentinel = new Node(null);
         //even if there is only a single sentinel node, you should make it circular!
         //especially important for making your code cleaner
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
-        for (ListItem item : items) {
+        for (T item : items) {
             addLast(item);
         }
     }
@@ -83,7 +83,7 @@ public class LinkedListDeque<ListItem> {
         if (other == null || other.size() == 0)
             return;
         for (int i = 0; i < other.size(); i++) {
-            this.addLast((ListItem)other.get(i));
+            this.addLast((T)other.get(i));
         }
         /*Node current = this.sentinel;
         Node ptr = other.sentinel.next;
@@ -98,7 +98,7 @@ public class LinkedListDeque<ListItem> {
         this.sentinel.prev = current;*/
     }
 
-    public void addFirst(ListItem item) {
+    public void addFirst(T item) {
         //can be omitted for the circular design(sentinel node)
         //        if (size == 0) {
         //            sentinel.next = new Node(item);
@@ -116,7 +116,7 @@ public class LinkedListDeque<ListItem> {
         ++size;
     }
 
-    public void addLast(ListItem item) {
+    public void addLast(T item) {
         //can be omitted for the circular design(sentinel node)
         //        if (size == 0) {
         //            sentinel.next = new Node(item);
@@ -154,10 +154,10 @@ public class LinkedListDeque<ListItem> {
         System.out.println(ptr.item);
     }
 
-    public ListItem removeFirst() {
+    public T removeFirst() {
         if (sentinel.next == null || size == 0)
             return null;
-        ListItem first = sentinel.next.getItem();
+        T first = sentinel.next.getItem();
         Node secondNode = sentinel.next.next;
         secondNode.prev = sentinel;
         sentinel.next = secondNode;
@@ -165,10 +165,10 @@ public class LinkedListDeque<ListItem> {
         return first;
     }
 
-    public ListItem removeLast() {
+    public T removeLast() {
         if (sentinel.prev == null || size == 0)
             return null;
-        ListItem last = sentinel.prev.item;
+        T last = sentinel.prev.item;
         Node secondLastNode = sentinel.prev.prev;
         sentinel.prev = secondLastNode;
         secondLastNode.next = sentinel;
@@ -176,7 +176,7 @@ public class LinkedListDeque<ListItem> {
         return last;
     }
 
-    public ListItem get(int index) {
+    public T get(int index) {
         if (index >= size)
             return null;
         int cnt = 0;
@@ -190,14 +190,14 @@ public class LinkedListDeque<ListItem> {
         return null;
     }
 
-    private ListItem getRecursion(int cnt, int index, Node ptr) {
+    private T getRecursion(int cnt, int index, Node ptr) {
         if (cnt == index)
             return ptr.item;
         ptr = ptr.next;
         return getRecursion(++cnt, index, ptr);
     }
 
-    public ListItem getRecursion(int index) {
+    public T getRecursion(int index) {
         if (index >= size)
             return null;
         int cnt = 0;

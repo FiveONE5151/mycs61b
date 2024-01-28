@@ -144,6 +144,25 @@ public class ArrayDequeTest {
         arrayDeque.printDeque();
         assertEquals(7, arrayDeque.length());
         arrayDeque.removeLast();
+        arrayDeque.printDeque();
         assertEquals(3, arrayDeque.length());
+        arrayDeque.removeLast();
+        assertNull(arrayDeque.removeLast());
     }
+
+    @Test
+    public void AGtestShrink() {
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+        arrayDeque.addFirst(0);
+        arrayDeque.get(0);
+        arrayDeque.removeLast();
+        arrayDeque.addFirst(3);
+        arrayDeque.get(0);
+        arrayDeque.addLast(5);
+        arrayDeque.removeFirst();
+        arrayDeque.removeLast();
+        arrayDeque.addLast(8);
+        arrayDeque.removeLast();
+    }
+
 }
