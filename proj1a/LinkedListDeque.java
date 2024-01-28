@@ -190,18 +190,18 @@ public class LinkedListDeque<T> {
         return null;
     }
 
-    private T getRecursion(int cnt, int index, Node ptr) {
+    private T getRecursive(int cnt, int index, Node ptr) {
         if (cnt == index)
             return ptr.item;
         ptr = ptr.next;
-        return getRecursion(++cnt, index, ptr);
+        return getRecursive(++cnt, index, ptr);
     }
 
-    public T getRecursion(int index) {
+    public T getRecursive(int index) {
         if (index >= size)
             return null;
         int cnt = 0;
         Node ptr = sentinel.next;
-        return getRecursion(cnt, index, ptr);
+        return getRecursive(cnt, index, ptr);
     }
 }

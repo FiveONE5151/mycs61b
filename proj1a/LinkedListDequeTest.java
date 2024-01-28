@@ -107,30 +107,30 @@ public class LinkedListDequeTest {
         LinkedListDeque<String> lld = new LinkedListDeque<>();
         lld.addLast("Front");
         assertFalse(lld.isEmpty());
-        assertEquals("Front", lld.getRecursion(0));
-        assertNull(lld.getRecursion(19));
+        assertEquals("Front", lld.getRecursive(0));
+        assertNull(lld.getRecursive(19));
         lld.removeLast();
-        assertNull(lld.getRecursion(0));
+        assertNull(lld.getRecursive(0));
         lld.addLast("Front");
         lld.addLast("Middle");
         lld.addLast("End");
-        assertEquals("Front", lld.getRecursion(0));
-        assertEquals("Middle", lld.getRecursion(1));
-        assertEquals("End", lld.getRecursion(2));
-        assertNull(lld.getRecursion(3));
+        assertEquals("Front", lld.getRecursive(0));
+        assertEquals("Middle", lld.getRecursive(1));
+        assertEquals("End", lld.getRecursive(2));
+        assertNull(lld.getRecursive(3));
         lld.printDeque();
     }
 
     @Test
     public void testDeepCopy() {
         LinkedListDeque<String> lld = new LinkedListDeque<>("Front", "Middle", "End");
-        assertEquals("Front", lld.getRecursion(0));
-        assertEquals("Middle", lld.getRecursion(1));
-        assertEquals("End", lld.getRecursion(2));
+        assertEquals("Front", lld.getRecursive(0));
+        assertEquals("Middle", lld.getRecursive(1));
+        assertEquals("End", lld.getRecursive(2));
         LinkedListDeque<String> lld2 = new LinkedListDeque<>(lld);
-        assertEquals("Front", lld2.getRecursion(0));
-        assertEquals("Middle", lld2.getRecursion(1));
-        assertEquals("End", lld2.getRecursion(2));
+        assertEquals("Front", lld2.getRecursive(0));
+        assertEquals("Middle", lld2.getRecursive(1));
+        assertEquals("End", lld2.getRecursive(2));
         lld2.printDeque();
         lld2 = null;
         LinkedListDeque<String> lld3 = new LinkedListDeque<>(lld2);
