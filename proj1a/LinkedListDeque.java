@@ -1,5 +1,5 @@
 /**
- * Doubly-Linked Circular List Circular design can avoid the special cases in add and remove methods eg. When size of
+ * Doubly-Linked Circular List Circular design can avoid the special cases in add and remove methods e.g. When size of
  * the list is 1, remove last requires both sentF and sentB to move to the previous node, which is the sentinel node but
  * in normal cases, it only requires the sentB to move to the previous node. it can also avoid the size==0 case
  *
