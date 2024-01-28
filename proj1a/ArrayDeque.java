@@ -1,3 +1,8 @@
+/**
+ * Circular array deque
+ *
+ * @param <ListItem>
+ */
 public class ArrayDeque<ListItem> {
     private ListItem[] array;
     private int size;
