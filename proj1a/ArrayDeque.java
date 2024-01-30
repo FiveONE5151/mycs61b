@@ -76,7 +76,7 @@ public class ArrayDeque<T> {
      * @source https://github.com/PKUFlyingPig/CS61B/blob/master/proj1a/ArrayDeque.java
      */
     private void arrayCopy(T[] newArray) {
-        int ptr1 = front + 1;
+        int ptr1 = plusOne(front, length);
         int ptr2 = 1;
         do {
             newArray[ptr2] = array[ptr1];
