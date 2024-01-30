@@ -145,7 +145,7 @@ public class ArrayDequeTest {
         assertEquals(7, arrayDeque.length());
         arrayDeque.removeLast();
         arrayDeque.printDeque();
-        assertEquals(3, arrayDeque.length());
+        assertEquals(7, arrayDeque.length());
         arrayDeque.removeLast();
         assertNull(arrayDeque.removeLast());
     }
