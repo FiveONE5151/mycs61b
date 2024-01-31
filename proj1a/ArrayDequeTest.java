@@ -48,6 +48,10 @@ public class ArrayDequeTest {
         assertEquals(15, arrayDeque.length());
         arrayDeque.addLast("F");
         arrayDeque.printDeque();
+        arrayDeque.removeFirst();
+        arrayDeque.printDeque();
+        arrayDeque.removeLast();
+        arrayDeque.printDeque();
     }
 
     @Test
