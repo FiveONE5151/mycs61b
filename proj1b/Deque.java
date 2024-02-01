@@ -7,6 +7,8 @@ public interface Deque<T> {
 
     public int size();
 
+    public void printDeque();
+
     public T removeFirst();
 
     public T removeLast();
