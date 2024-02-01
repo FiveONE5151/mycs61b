@@ -137,6 +137,14 @@ public class LinkedListDequeTest {
         assertEquals(0, lld3.size());
     }
 
+    @Test
+    public void testIterator() {
+        LinkedListDeque<String> lld = new LinkedListDeque<>("Front", "Middle", "End");
+        for (var i : lld) {
+            System.out.print(i + " ");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println(-1 % 6);
         System.out.println("Running tests.\n");

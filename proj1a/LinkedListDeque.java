@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /**
  * Doubly-Linked Circular List Circular design can avoid the special cases in add and remove methods e.g. When size of
  * the list is 1, remove last requires both sentF and sentB to move to the previous node, which is the sentinel node but
@@ -5,7 +7,28 @@
  *
  * @param <T>
  */
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Iterable<T> {
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
+    }
+
+    private class LinkedListIterator implements Iterator<T> {
+        private Node ptr = sentinel.next;
+
+        @Override
+        public boolean hasNext() {
+            return ptr != sentinel;
+        }
+
+        @Override
+        public T next() {
+            T returnItem = ptr.getItem();
+            ptr = ptr.next;
+            return returnItem;
+        }
+    }
+
     private class Node {
         private Node prev;
         private T item;

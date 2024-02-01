@@ -169,4 +169,23 @@ public class ArrayDequeTest {
         arrayDeque.removeLast();
     }
 
+    @Test
+    public void testIterator() {
+        ArrayDeque<Integer> arrayDeque = new ArrayDeque<>();
+        arrayDeque.addFirst(10);
+        arrayDeque.removeLast();
+        arrayDeque.addFirst(20);
+        arrayDeque.removeLast();
+        for (var i : arrayDeque) {
+            i = Integer.valueOf(30);
+        }
+        for (int i = 0; i < 7; ++i) {
+            arrayDeque.addLast(i);
+        }
+        for (var i : arrayDeque) {
+            System.out.print(i + " ");
+        }
+
+    }
+
 }

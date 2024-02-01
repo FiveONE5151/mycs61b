@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 /**
  * Circular array deque
  *
@@ -5,7 +7,7 @@
  * @author Jerry-W
  * @source https://github.com/PKUFlyingPig/CS61B/blob/master/proj1a/ArrayDeque.java (the for loop logic optimized)
  */
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Iterable<T> {
     private T[] array;
     private int size;
     private int length = 8;
@@ -163,5 +165,26 @@ public class ArrayDeque<T> {
             throw new IndexOutOfBoundsException(message);
         }
         return array[plusOne(index + front, length)];
+    }
+
+    private class ArrayIterator implements Iterator<T> {
+        private int pos = 0;
+
+        @Override
+        public boolean hasNext() {
+            return pos < size;
+        }
+
+        @Override
+        public T next() {
+            T returnItem = get(pos);
+            ++pos;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayIterator();
     }
 }
