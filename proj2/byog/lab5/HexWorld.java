@@ -4,7 +4,6 @@ import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
 import edu.princeton.cs.algs4.In;
-import edu.princeton.cs.algs4.SET;
 
 import java.util.Random;
 
@@ -16,6 +15,11 @@ public class HexWorld {
     private static int HEIGHT = 50;
     private static final TETile[] TILES_SET = {Tileset.FLOOR, Tileset.SAND, Tileset.TREE, Tileset.WALL, Tileset.GRASS,
         Tileset.MOUNTAIN, Tileset.FLOWER, Tileset.LOCKED_DOOR, Tileset.PLAYER};
+
+    public static void setWorld(int w, int h) {
+        WIDTH = w;
+        HEIGHT = h;
+    }
 
     /**
      * check whether the given position can hold a hexagon of given size
@@ -49,6 +53,38 @@ public class HexWorld {
     }
 
     /**
+     * calculate the exact width of given row
+     * 
+     * @param size
+     *            size of hexagon
+     * @param row
+     *            the row coordinate inside the hexagon, not the entire canvas
+     * @return width
+     */
+    public static int hexRowWidth(int size, int row) {
+        if (row < size)
+            return size + 2 * row;
+        return size + (size - 1) * 2 - (row - size) * 2;
+    }
+
+    /**
+     * calculate the row offset of the given row
+     * 
+     * @param size
+     *            size of hexagon
+     * @param row
+     *            the row coordinate inside the hexagon, not the entire canvas
+     * @return the row offset e.g. for hexagon of size 3, the offset from row 0 to row 5 is: "2,1,0,1,2"
+     *
+     */
+    public static int hexRowOffset(int size, int row) {
+        if (row < size) {
+            return size - 1 - row;
+        }
+        return row - size;
+    }
+
+    /**
      * add a hexagon of the certain size to a given position in the world
      *
      * @param tiles
@@ -72,23 +108,12 @@ public class HexWorld {
         // modify the tiles array according to the given coordinates
         int delta = 100;
 
-        // first half
-        for (int j = 0, row = p.getY() + hexHeight - j - 1; j < hexHeight / 2;
-            ++j, row = p.getY() + hexHeight - j - 1) {
-            for (int i = 0, column = i + p.getX(); i < hexWidth; ++i, column = i + p.getX()) {
-                if (i < size - j - 1 || i > hexWidth - size + j)
-                    continue;
-                else
-                    tiles[column][row] = TILES_SET[hexagonStyle];
-            }
-        }
-        // second half
-        for (int j = size, row = p.getY() + hexHeight - j - 1; j < hexHeight; ++j, row = p.getY() + hexHeight - j - 1) {
-            for (int i = 0, column = i + p.getX(); i < hexWidth; ++i, column = i + p.getX()) {
-                if (i < -size + j || i > hexWidth + size - j - 1)
-                    continue;
-                else
-                    tiles[column][row] = TILES_SET[hexagonStyle];
+        for (int row = 0, yCoordinate; row < size * 2; ++row) {
+            yCoordinate = p.getY() + row;
+            for (int column = 0, xCoordinate = p.getX() + hexRowOffset(size, row); column < hexRowWidth(size, row);
+                ++column, ++xCoordinate) {
+
+                tiles[xCoordinate][yCoordinate] = TILES_SET[hexagonStyle];
             }
         }
     }
@@ -153,6 +178,14 @@ public class HexWorld {
         return new Position(rx, ry);
     }
 
+    private static void initWorld(int worldWidth, int worldHeight, TETile[][] world) {
+        for (int x = 0; x < worldWidth; x += 1) {
+            for (int y = 0; y < worldHeight; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         TERenderer ter = new TERenderer();
         System.out.println("Size of hexagon(>1): ");
@@ -163,6 +196,7 @@ public class HexWorld {
         int worldWidth = hexWidth * 5;
         int worldHeight = hexHeight * 5;
         ter.initialize(worldWidth, worldHeight);
+        setWorld(worldWidth, worldHeight);
         TETile[][] world = new TETile[worldWidth][worldHeight];
         initWorld(worldWidth, worldHeight, world);
         Position origin = new Position(0, hexHeight);
@@ -186,11 +220,4 @@ public class HexWorld {
         ter.renderFrame(world);
     }
 
-    private static void initWorld(int worldWidth, int worldHeight, TETile[][] world) {
-        for (int x = 0; x < worldWidth; x += 1) {
-            for (int y = 0; y < worldHeight; y += 1) {
-                world[x][y] = Tileset.NOTHING;
-            }
-        }
-    }
 }
