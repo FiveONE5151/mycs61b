@@ -3,6 +3,7 @@ package byog.lab5;
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
 import byog.TileEngine.Tileset;
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.SET;
 
 import java.util.Random;
@@ -11,8 +12,8 @@ import java.util.Random;
  * Draws a world consisting of hexagonal regions.
  */
 public class HexWorld {
-    private static final int WIDTH = 50;
-    private static final int HEIGHT = 50;
+    private static int WIDTH = 50;
+    private static int HEIGHT = 50;
     private static final TETile[] TILES_SET = {Tileset.FLOOR, Tileset.SAND, Tileset.TREE, Tileset.WALL, Tileset.GRASS,
         Tileset.MOUNTAIN, Tileset.FLOWER, Tileset.LOCKED_DOOR, Tileset.PLAYER};
 
@@ -72,7 +73,8 @@ public class HexWorld {
         int delta = 100;
 
         // first half
-        for (int j = 0, row = p.getY() + hexHeight - j; j < hexHeight / 2; ++j, row = p.getY() + hexHeight - j) {
+        for (int j = 0, row = p.getY() + hexHeight - j - 1; j < hexHeight / 2;
+            ++j, row = p.getY() + hexHeight - j - 1) {
             for (int i = 0, column = i + p.getX(); i < hexWidth; ++i, column = i + p.getX()) {
                 if (i < size - j - 1 || i > hexWidth - size + j)
                     continue;
@@ -81,7 +83,7 @@ public class HexWorld {
             }
         }
         // second half
-        for (int j = size, row = p.getY() + hexHeight - j; j < hexHeight; ++j, row = p.getY() + hexHeight - j) {
+        for (int j = size, row = p.getY() + hexHeight - j - 1; j < hexHeight; ++j, row = p.getY() + hexHeight - j - 1) {
             for (int i = 0, column = i + p.getX(); i < hexWidth; ++i, column = i + p.getX()) {
                 if (i < -size + j || i > hexWidth + size - j - 1)
                     continue;
@@ -153,32 +155,42 @@ public class HexWorld {
 
     public static void main(String[] args) {
         TERenderer ter = new TERenderer();
-        ter.initialize(WIDTH, HEIGHT);
-        int worldWidth = 40;
-        int worldHeight = 40;
-        TETile[][] world = new TETile[WIDTH][HEIGHT];
-        for (int x = 0; x < WIDTH; x += 1) {
-            for (int y = 0; y < HEIGHT; y += 1) {
-                world[x][y] = Tileset.NOTHING;
-            }
-        }
-        Position origin = new Position(0, 16);
+        System.out.println("Size of hexagon(>1): ");
+        In in = new In();
+        int hexSize = in.readInt();
+        int hexWidth = hexWidthOf(hexSize);
+        int hexHeight = hexHeightOf(hexSize);
+        int worldWidth = hexWidth * 5;
+        int worldHeight = hexHeight * 5;
+        ter.initialize(worldWidth, worldHeight);
+        TETile[][] world = new TETile[worldWidth][worldHeight];
+        initWorld(worldWidth, worldHeight, world);
+        Position origin = new Position(0, hexHeight);
+
         for (int i = 0, n = 0; i < 5; i++) {
             if (i < 3) {
                 n = 3 + i;
-                addColumnOfRandomHexagon(world, origin, 3, n);
-                origin = bottomRightOf(origin, 3);
+                addColumnOfRandomHexagon(world, origin, hexSize, n);
+                origin = bottomRightOf(origin, hexSize);
             } else if (i == 3) {
-                origin = topRightOf(topLeftOf(origin, 3), 3);
+                origin = topRightOf(topLeftOf(origin, hexSize), hexSize);
                 n = 7 - i;
-                addColumnOfRandomHexagon(world, origin, 3, n);
-                origin = topRightOf(origin, 3);
+                addColumnOfRandomHexagon(world, origin, hexSize, n);
+                origin = topRightOf(origin, hexSize);
             } else {
                 n = 7 - i;
-                addColumnOfRandomHexagon(world, origin, 3, n);
-                origin = topRightOf(origin, 3);
+                addColumnOfRandomHexagon(world, origin, hexSize, n);
+                origin = topRightOf(origin, hexSize);
             }
         }
         ter.renderFrame(world);
+    }
+
+    private static void initWorld(int worldWidth, int worldHeight, TETile[][] world) {
+        for (int x = 0; x < worldWidth; x += 1) {
+            for (int y = 0; y < worldHeight; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
     }
 }
