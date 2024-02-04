@@ -97,8 +97,8 @@ public class HexWorld {
      *            the style of hexagon range from 0-8
      */
     public static void addHexagon(TETile[][] tiles, Position p, int size, int hexagonStyle) {
-        int width = tiles[0].length;
-        int height = tiles.length;
+        int height = tiles[0].length; // 引擎渲染的坐标是按照数组xy与实际坐标xy对应，所以这里的height应该是tiles[0]的length
+        int width = tiles.length; // width同理
         // bound check
         int hexWidth = hexWidthOf(size);
         int hexHeight = hexHeightOf(size);
